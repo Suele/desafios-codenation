@@ -2,20 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import RecipeItem from "./RecipeItem";
 
-const getHighlightedText = (searchedText, higlight = "") => {
-  if (higlight.length > 0) {
-    const parts = searchedText.split(new RegExp(`(${higlight})`, "gi"));
-    return parts.map((part, i) =>
-      part.toLowerCase() === higlight.toLowerCase() ? (
-        <mark key={i}>{part}</mark>
-      ) : (
-        part
-      )
-    );
-  }
-  return searchedText;
-};
-
 // TODO: Você deve verificar se a receita existe
 const RecipePage = ({ searchString = "", recipes = [] }) => {
   return !searchString || searchString ? (
@@ -35,8 +21,8 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
             <RecipeItem
               key={recipe.title}
               thumbnail={recipe.thumbnail}
-              title={getHighlightedText(item.title, searchString)}
-              ingredients={getHighlightedText(item.ingredients, searchString)}
+              title={recipe.title}
+              ingredients={recipe.ingredients}
             />
             {console.log(searchString)};
           </div>
