@@ -10,8 +10,10 @@ class Login extends Component {
     };
   }
 
+  handlerSubmitForm = () => {};
+
   render = () => (
-    <form className='form-signin'>
+    <form className='form-signin' onSubmit={this.handlerSubmitForm}>
       <div className='text-center mb-4'>
         <h1 className='h3 mb-3 font-weight-normal'>Login / Register</h1>
       </div>
@@ -36,6 +38,7 @@ class Login extends Component {
         <input
           name='password'
           onChange={e => {
+            e.preventDefault();
             this.setState({ password: e.target.value });
           }}
           value={this.onChange}
