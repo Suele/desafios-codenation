@@ -17,13 +17,15 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
       })
       .map(recipe => {
         return (
-          <div className='col-sm-3 mt-2'>
-            <RecipeItem
-              key={recipe.title}
-              thumbnail={recipe.thumbnail}
-              title={recipe.title}
-              ingredients={recipe.ingredients}
-            />
+          <div className='container mt-10'>
+            <div className='row'>
+              <RecipeItem
+                key={recipe.title}
+                thumbnail={recipe.thumbnail}
+                title={recipe.title}
+                ingredients={recipe.ingredients}
+              />
+            </div>
           </div>
         );
       })
@@ -31,6 +33,7 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
     <h1>Não foi possivel encontrar a receita ou ingrediente.</h1>
   );
 };
+<CommentsBlock />;
 
 RecipePage.propTypes = {
   recipe: PropTypes.object

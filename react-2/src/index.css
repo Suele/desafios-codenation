@@ -11,8 +11,8 @@
   flex-wrap: wrap;
 }
 
-.row > div[class*='col-'] {
- display: flex;
+.row div[class*='col-'] {
+  display: flex;
 }
 
 .card {
@@ -38,5 +38,5 @@ mark {
 }
 
 .RecipeItem .card:hover {
-  border: 2px solid #495057;
+  border: 2px solid #3f4347;
 }

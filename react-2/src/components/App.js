@@ -10,7 +10,7 @@ import recipes from "../sample_data/recipes.json";
 import PropTypes from "prop-types";
 
 const HomeRoute = ({ match, searchString }) => (
-  <Home match={match} recipes={[recipes.results]} searchString={searchString} />
+  <Home match={match} recipes={recipes} searchString={searchString} />
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
@@ -48,6 +48,7 @@ class App extends Component {
       path: pathname,
       exact: true
     });
+    console.log("pathname: ", pathname);
 
     return (
       <div className='App'>
@@ -62,7 +63,7 @@ class App extends Component {
           <Route
             exact
             path='/:searchString'
-            render={({ match }) => {
+            render={() => {
               return (
                 <Link to={`recipe/${slugify(searchString)}`}>
                   <RecipePage searchString={searchString} recipes={recipes} />
@@ -73,7 +74,7 @@ class App extends Component {
           <Route
             exact
             path='recipe/:searchString'
-            render={({ match }) => {
+            render={() => {
               return searchString(
                 <Link to={`recipe/${slugify(searchString)}`}>
                   <RecipePage searchString={searchString} recipes={recipes} />
@@ -91,18 +92,17 @@ class App extends Component {
             path='/'
             render={() => {
               return (
-                <Link to={`recipe/${slugify(searchString)}`}>
-                  <HomeRoute
-                    match={`${match.params.searchString}/`}
-                    searchString={searchString}
-                  />
-                </Link>
+                <HomeRoute
+                  match={`${match.path}`}
+                  searchString={searchString}
+                />
               );
             }}
           />
-          {console.log(slugify(searchString))}
+          {console.log("{match.path}", `${match.path}`)}
+          {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
-          {console.log("recipes: ", recipes.results.title)}
+          {console.log("path >>>: ", match.path)}
         </div>
       </div>
     );
