@@ -41,7 +41,7 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
             </Link>
           </div>
         );
-      }) || <h1>Não foi Possivel</h1>;
+      });
 };
 
 RecipePage.propTypes = {

@@ -59,7 +59,7 @@ class App extends Component {
             path='/'
             render={() => {
               return (
-                <Link to={`recipe/${slugify(searchString.toString())}`}>
+                <Link to={`recipe/${slugify(searchString)}`}>
                   <Home recipes={recipes} searchString={searchString} />
                 </Link>
               );
