@@ -10,7 +10,7 @@ import recipes from "../sample_data/recipes.json";
 import PropTypes from "prop-types";
 
 const HomeRoute = ({ match, searchString }) => (
-  <Home recipes={recipes} searchString={searchString} />
+  <Home match={match} recipes={[recipes.results]} searchString={searchString} />
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
@@ -61,17 +61,6 @@ class App extends Component {
         <div className='container mt-10'>
           <Route
             exact
-            path='/'
-            render={() => {
-              return (
-                <Link to={`recipe/${slugify(searchString.toString())}`}>
-                  <Home recipes={recipes} searchString={searchString} />
-                </Link>
-              );
-            }}
-          />
-          <Route
-            exact
             path='/:searchString'
             render={({ match }) => {
               return (
@@ -92,12 +81,28 @@ class App extends Component {
               );
             }}
           />
-          {console.log(slugify(searchString))}
-          {console.log("match: ", match)}
+
           <Route path='/recipe/recipe' component={RecipePageRoute} />
           <Route path='/user/login' component={LoginRoute} />
           <Route path='/user/profile' component={ProfileRoute} />
-          <Route exact path='/' component={HomeRoute} />
+
+          <Route
+            exact
+            path='/'
+            render={() => {
+              return (
+                <Link to={`recipe/${slugify(searchString)}`}>
+                  <HomeRoute
+                    match={`${match.params.searchString}/`}
+                    searchString={searchString}
+                  />
+                </Link>
+              );
+            }}
+          />
+          {console.log(slugify(searchString))}
+          {console.log("match: ", match)}
+          {console.log("recipes: ", recipes.results.title)}
         </div>
       </div>
     );
