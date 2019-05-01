@@ -68,7 +68,7 @@ class App extends Component {
           <Route
             exact
             path='/:searchString'
-            render={({ match }) => {
+            render={() => {
               return (
                 <Link to={`recipe/${slugify(searchString)}`}>
                   <RecipePage searchString={searchString} recipes={recipes} />
@@ -78,9 +78,9 @@ class App extends Component {
           />
           <Route
             exact
-            path='recipe/:searchString'
-            render={({ match }) => {
-              return searchString(
+            path='/recipe/:searchString'
+            render={() => {
+              return (
                 <Link to={`recipe/${slugify(searchString)}`}>
                   <RecipePage searchString={searchString} recipes={recipes} />
                 </Link>
