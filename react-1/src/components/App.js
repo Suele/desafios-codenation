@@ -1,11 +1,19 @@
 import React, { Component } from "react";
-import { Route, withRouter, Link, matchPath } from "react-router-dom";
+import { Switch, Route, withRouter, Link, matchPath } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import RecipePage from "./RecipePage";
 import { slugify } from "../helpers";
 import recipes from "../sample_data/recipes.json";
 import PropTypes from "prop-types";
+
+const NoMatch = ({}) => (
+  <div>
+    <h3>
+      <h1>Deu merda.</h1>
+    </h3>
+  </div>
+);
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +36,7 @@ class App extends Component {
 
     console.log("pathName: ", pathName);
     console.log("searchString: ", searchString);
+    console.log("path: ", path);
   }
 
   render() {
@@ -54,39 +63,42 @@ class App extends Component {
         )}/>
         <div className='container mt-10'>
           {/* TODO: Implementar rotas  */}
-          <Route
-            exact
-            path='/'
-            render={() => {
-              return (
-                <Link to={`recipe/${slugify(searchString)}`}>
-                  <Home recipes={recipes} searchString={searchString} />
-                </Link>
-              );
-            }}
-          />
-          <Route
-            exact
-            path='/:searchString'
-            render={() => {
-              return (
-                <Link to={`recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
-              );
-            }}
-          />
-          <Route
-            exact
-            path='/recipe/:searchString'
-            render={() => {
-              return (
-                <Link to={`recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
-              );
-            }}
-          />
+          <Switch>
+            <Route
+              exact
+              path='/'
+              render={() => {
+                return (
+                  <Link to={`/recipe/${slugify(searchString)}`}>
+                    <Home recipes={recipes} searchString={searchString} />
+                  </Link>
+                );
+              }}
+            />
+            <Route
+              exact
+              path='/:searchString'
+              render={({ match }) => {
+                return (
+                  <Link to={`/recipe/${slugify(searchString)}`}>
+                    <RecipePage searchString={searchString} recipes={recipes} />
+                  </Link>
+                );
+              }}
+            />
+            <Route
+              exact
+              path='/recipe/:searchString'
+              render={({ match }) => {
+                return (
+                  <Link to={`/recipe/${slugify(searchString)}`}>
+                    <RecipePage searchString={searchString} recipes={recipes} />
+                  </Link>
+                );
+              }}
+            />
+            <Route render={() => <NoMatch />} />
+          </Switch>
           {console.log(slugify(searchString))}
           {console.log("match: ", match)}
         </div>
