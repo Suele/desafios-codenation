@@ -4,13 +4,11 @@ import RecipeItem from "./RecipeItem";
 
 const Home = ({ recipes = [] }) =>
   recipes.results.map(recipe => (
-    <div className='container'>
-      <RecipeItem
-        title={recipe.title}
-        thumbnail={recipe.thumbnail}
-        ingredients={recipe.ingredients}
-      />
-    </div>
+    <RecipeItem
+      title={recipe.title}
+      thumbnail={recipe.thumbnail}
+      ingredients={recipe.ingredients}
+    />
   ));
 Home.propTypes = {
   searchString: PropTypes.string,

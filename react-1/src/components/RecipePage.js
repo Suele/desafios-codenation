@@ -32,19 +32,12 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
       })
       .map(recipe => {
         return (
-          <div className='container mt-10'>
-            <div className='row'>
-              <RecipeItem
-                key={recipe.title}
-                thumbnail={recipe.thumbnail}
-                title={getHighlightedText(recipe.title, searchString)}
-                ingredients={getHighlightedText(
-                  recipe.ingredients,
-                  searchString
-                )}
-              />
-            </div>
-          </div>
+          <RecipeItem
+            key={recipe.title}
+            thumbnail={recipe.thumbnail}
+            title={getHighlightedText(recipe.title, searchString)}
+            ingredients={getHighlightedText(recipe.ingredients, searchString)}
+          />
         );
       })
   ) : (

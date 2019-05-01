@@ -96,7 +96,7 @@ class App extends Component {
               );
             }}
           />
-          <Route render={() => <NoMatch />} />
+          <Route path={"*"} render={() => <NoMatch />} />
           {console.log(slugify(searchString))}
           {console.log("match: ", match)}
         </div>
