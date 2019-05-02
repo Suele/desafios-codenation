@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import loginService from "../services/loginService";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -10,22 +11,22 @@ class Login extends Component {
     };
   }
 
-  loginUser = e => {
-    e.preventDefault();
+  loginUser = () => {
+    const { history } = this.props;
     const usuarioTentandoLogar = loginService.login(
       this.state.username,
       this.state.password
     );
     console.log(usuarioTentandoLogar);
+    console.log(loginService.isLogged());
   };
 
   registerUser = e => {
-    e.preventDefault();
-    const usuarioFazerRegistro = loginService.register(
+    const usuarioTentandoFazerRegistro = loginService.register(
       this.state.username,
       this.state.password
     );
-    console.log(usuarioFazerRegistro);
+    console.log(usuarioTentandoFazerRegistro);
   };
 
   render = () => (
@@ -66,20 +67,25 @@ class Login extends Component {
       </div>
 
       <div className='mt-5'>
-        <button
-          onClick={this.loginUser}
-          className='login btn btn-lg btn-primary btn-block'
-          type='submit'
-        >
-          Login
-        </button>
-        <button
-          onClick={this.registerUser}
-          className='register btn btn-lg btn-secondary btn-block'
-          type='submit'
-        >
-          Register
-        </button>
+        <Link to={"/"}>
+          <button
+            onClick={this.loginUser}
+            className='login btn btn-lg btn-primary btn-block'
+            type='submit'
+          >
+            Login
+          </button>
+        </Link>
+
+        <Link to={"/"}>
+          <button
+            onClick={this.registerUser}
+            className='register btn btn-lg btn-secondary btn-block'
+            type='submit'
+          >
+            Register
+          </button>
+        </Link>
       </div>
       {console.log(this.state)}
     </form>
