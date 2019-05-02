@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CommentsBlock from "./CommentsBlock";
 import RecipeItem from "./RecipeItem";
+import { Link } from "react-router-dom";
 
 const RecipePage = ({ searchString = "", recipes = [] }) => {
   return searchString ? (
@@ -30,10 +31,12 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
         );
       })
   ) : (
-    <h1>Não foi possivel encontrar a receita ou ingrediente.</h1>
+    <div>
+      <RecipeItem />
+      <CommentsBlock />
+    </div>
   );
 };
-<CommentsBlock />;
 
 RecipePage.propTypes = {
   recipe: PropTypes.object
