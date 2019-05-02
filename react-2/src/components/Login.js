@@ -12,7 +12,6 @@ class Login extends Component {
   }
 
   loginUser = () => {
-    const { history } = this.props;
     const usuarioTentandoLogar = loginService.login(
       this.state.username,
       this.state.password
@@ -21,7 +20,7 @@ class Login extends Component {
     console.log(loginService.isLogged());
   };
 
-  registerUser = e => {
+  registerUser = () => {
     const usuarioTentandoFazerRegistro = loginService.register(
       this.state.username,
       this.state.password
@@ -67,25 +66,48 @@ class Login extends Component {
       </div>
 
       <div className='mt-5'>
-        <Link to={"/"}>
-          <button
-            onClick={this.loginUser}
-            className='login btn btn-lg btn-primary btn-block'
-            type='submit'
-          >
-            Login
-          </button>
-        </Link>
-
-        <Link to={"/"}>
-          <button
-            onClick={this.registerUser}
-            className='register btn btn-lg btn-secondary btn-block'
-            type='submit'
-          >
-            Register
-          </button>
-        </Link>
+        {loginService.isLogged() ? (
+          <Link to={"/"}>
+            <button
+              onClick={this.loginUser}
+              className='login btn btn-lg btn-primary btn-block'
+              type='submit'
+            >
+              Login
+            </button>
+          </Link>
+        ) : (
+          <Link to={"/user/login"}>
+            <button
+              onClick={this.loginUser}
+              className='login btn btn-lg btn-primary btn-block'
+              type='submit'
+            >
+              Login
+            </button>
+          </Link>
+        )}
+        {loginService.isLogged() ? (
+          <Link to={"/"}>
+            <button
+              onClick={this.registerUser}
+              className='register btn btn-lg btn-secondary btn-block'
+              type='submit'
+            >
+              Register
+            </button>
+          </Link>
+        ) : (
+          <Link to={"/user/login"}>
+            <button
+              onClick={this.registerUser}
+              className='register btn btn-lg btn-secondary btn-block'
+              type='submit'
+            >
+              <Link to={"/"}>Register </Link>
+            </button>
+          </Link>
+        )}
       </div>
       {console.log(this.state)}
     </form>

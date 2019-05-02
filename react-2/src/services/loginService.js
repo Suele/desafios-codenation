@@ -10,6 +10,7 @@ export const login = ({ username, password }) => {
   } else {
     localStorageWrapper.set(NS_LOGGED_USER, user);
 
+    console.log("user", user);
     return true;
   }
 };
@@ -20,15 +21,16 @@ export const register = ({ username, password }) => {
     alert("User already exists");
   } else {
     const user = {
-      username,
-      password
+      username: username,
+      password: password
     };
 
     localStorageWrapper.set(NS_USERS, {
       ...users,
       [username]: user
     });
-
+    localStorageWrapper.set(NS_LOGGED_USER, user);
+    console.log("user", user);
     return user;
   }
 };
