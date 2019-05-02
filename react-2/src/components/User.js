@@ -1,7 +1,18 @@
-import React from 'react'
+import React from "react";
+import loginService from "../services/loginService";
+import { Link } from "react-router-dom";
 
 const User = () => (
-    <button className="btn">Logout</button>
-)
+  <Link to={"/"}>
+    <button
+      className='btn'
+      onClick={() => {
+        loginService.logout();
+      }}
+    >
+      Logout
+    </button>
+  </Link>
+);
 
-export default User
+export default User;
