@@ -1,4 +1,0 @@
-
-> test_files@0.1.0 test /home/preto/codenation/react-2
-> cross-env CI=true react-scripts test --env=jsdom
-

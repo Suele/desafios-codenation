@@ -1,6 +1,6 @@
 import React from "react";
 import loginService from "../services/loginService";
-import { Redirect, Link, Route } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       loginService.isLogged() ? (
         <Component {...props} />
       ) : (
-        <Redirect
+        <Link
           to={{
             pathname: "/",
             state: { from: props.location }
