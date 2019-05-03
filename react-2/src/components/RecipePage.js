@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import CommentsBlock from "./CommentsBlock";
 import RecipeItem from "./RecipeItem";
-import { Link } from "react-router-dom";
 
 const RecipePage = ({ searchString = "", recipes = [] }) => {
   return searchString ? (

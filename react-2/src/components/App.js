@@ -83,10 +83,6 @@ class App extends Component {
             }}
           />
 
-          <Route path='/recipe/recipe' component={RecipePageRoute} />
-          <Route path='/user/login' component={LoginRoute} />
-          <Route path='/user/profile' component={ProfileRoute} />
-
           <Route
             exact
             path='/'
@@ -99,6 +95,11 @@ class App extends Component {
               );
             }}
           />
+
+          <Route path='/recipe/recipe' component={RecipePageRoute} />
+          <Route path='/user/login' component={LoginRoute} />
+          <Route path='/user/profile' component={ProfileRoute} />
+
           {console.log("{match.path}", `${match.path}`)}
           {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
