@@ -99,15 +99,7 @@ class Login extends Component {
               </button>
             </Link>
           ) : (
-            <PrivateRoute>
-              <button
-                onClick={this.loginUser}
-                className='login btn btn-lg btn-primary btn-block'
-                type='submit'
-              >
-                Login
-              </button>
-            </PrivateRoute>
+            <PrivateRoute />
           )}
           {loginService.isLogged() ? (
             <Link to={"/"}>
