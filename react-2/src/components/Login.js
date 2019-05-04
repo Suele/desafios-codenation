@@ -1,24 +1,8 @@
 import React, { Component } from "react";
 import loginService from "../services/loginService";
-import { Redirect, Link, Route } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      loginService.isLogged() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
+const RouterHome = () => <Redirect to={"/"} />;
 
 class Login extends Component {
   constructor(props) {
@@ -48,9 +32,6 @@ class Login extends Component {
   };
 
   render() {
-    let { from } = { from: { pathname: "/" } };
-    if (loginService.isLogged()) return <Redirect to={from} />;
-
     return (
       <form className='form-signin'>
         <div className='text-center mb-4'>
@@ -90,7 +71,7 @@ class Login extends Component {
 
         <div className='mt-5'>
           {loginService.isLogged() ? (
-            <PrivateRoute />
+            <RouterHome />
           ) : (
             <Link to={"/user/login"}>
               <button
