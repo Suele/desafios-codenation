@@ -1,24 +1,10 @@
 import React from "react";
 import loginService from "../services/loginService";
-import { Redirect, Link, Route } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
-const User = ({ component: Component, ...rest }) =>
+const User = () =>
   !loginService.isLogged() ? (
-    <Route
-      {...rest}
-      render={props =>
-        loginService.isLogged() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
+    <Redirect to={"/"} />
   ) : (
     <Link to={"/"}>
       <button
