@@ -30,19 +30,20 @@ class Login extends Component {
   }
 
   loginUser = () => {
-    const usuarioTentandoLogar = loginService.login(
-      this.state.username,
-      this.state.password
-    );
+    let { username, password } = this.state;
+    const usuarioTentandoLogar = loginService.login({ username, password });
     console.log(usuarioTentandoLogar);
     console.log(loginService.isLogged());
   };
 
   registerUser = () => {
-    const usuarioTentandoFazerRegistro = loginService.register(
-      this.state.username,
-      this.state.password
-    );
+    let { username, password } = this.state;
+
+    const usuarioTentandoFazerRegistro = loginService.register({
+      username,
+      password
+    });
+
     console.log(usuarioTentandoFazerRegistro);
   };
 
@@ -88,8 +89,10 @@ class Login extends Component {
         </div>
 
         <div className='mt-5'>
-          {!loginService.isLogged() ? (
-            <Link to={"/"}>
+          {loginService.isLogged() ? (
+            <PrivateRoute />
+          ) : (
+            <Link to={"/user/login"}>
               <button
                 onClick={this.loginUser}
                 className='login btn btn-lg btn-primary btn-block'
@@ -98,8 +101,6 @@ class Login extends Component {
                 Login
               </button>
             </Link>
-          ) : (
-            <PrivateRoute />
           )}
           {loginService.isLogged() ? (
             <Link to={"/"}>

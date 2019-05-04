@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import commentsService from "../services/commentsService";
-import RecipeItem from "./RecipeItem";
 
 class CommentsBlock extends Component {
   constructor(props) {
@@ -12,7 +11,6 @@ class CommentsBlock extends Component {
     };
   }
   addComment = e => {
-    e.preventDefault();
     const usuarioTentandoFazerComentario = commentsService.insert(
       this.state.comments
     );
@@ -45,7 +43,7 @@ class CommentsBlock extends Component {
           <div className='form-group'>
             <label htmlFor='exampleInputEmail1'>Comment</label>
             <textarea
-              disabled={true}
+              disabled={false}
               value={this.onChange}
               onChange={e => {
                 e.preventDefault();
@@ -59,13 +57,14 @@ class CommentsBlock extends Component {
           </div>
           <button
             onClick={this.addComment}
-            disabled={true}
+            disabled={false}
             type='submit'
             className='btn btn-primary'
           >
             Submit
           </button>
         </form>
+        {console.log(this.state)}
       </div>
     );
   }

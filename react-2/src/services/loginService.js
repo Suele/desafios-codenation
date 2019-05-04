@@ -17,21 +17,21 @@ export const login = ({ username, password }) => {
 
 export const register = ({ username, password }) => {
   const users = localStorageWrapper.get(NS_USERS) || {};
+
   if (users[username]) {
     alert("User already exists");
-  } else {
+  }
+  if (username && password) {
     const user = {
-      username: username,
-      password: password
+      username,
+      password
     };
-
-    localStorageWrapper.set(NS_USERS, {
-      ...users,
-      [username]: user
-    });
+    localStorageWrapper.set(NS_USERS, { ...users, [username]: user });
     localStorageWrapper.set(NS_LOGGED_USER, user);
-    console.log("user", user);
+
     return user;
+  } else {
+    alert("User/Password are empty");
   }
 };
 

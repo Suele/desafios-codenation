@@ -1,28 +1,24 @@
 import React from "react";
 import loginService from "../services/loginService";
-import { Link, Route } from "react-router-dom";
+import { Redirect, Link, Route } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      loginService.isLogged() ? (
-        <Component {...props} />
-      ) : (
-        <Link
-          to={{
-            pathname: "/",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
-
-const User = () =>
+const User = ({ component: Component, ...rest }) =>
   !loginService.isLogged() ? (
-    <PrivateRoute />
+    <Route
+      {...rest}
+      render={props =>
+        loginService.isLogged() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
   ) : (
     <Link to={"/"}>
       <button
