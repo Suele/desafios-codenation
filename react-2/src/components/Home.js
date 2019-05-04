@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import RecipeItem from "./RecipeItem";
 
-const Home = ({ recipes = [] }) =>
-  recipes.results.map(recipe => (
+const Home = ({ recipes = [] }) => {
+  if (!recipes.results) return null;
+  return recipes.results.map(recipe => (
     <RecipeItem
       key={recipe.title}
       title={recipe.title}
@@ -11,6 +12,7 @@ const Home = ({ recipes = [] }) =>
       ingredients={recipe.ingredients}
     />
   ));
+};
 
 Home.propTypes = {
   searchString: PropTypes.string,
