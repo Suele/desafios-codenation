@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import commentsService from "../services/commentsService";
+import loginService from "../services/loginService";
 
 class CommentsBlock extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comments: []
+      comments: [],
+      disabledComment: true
     };
   }
-  addComment = e => {
-    const usuarioTentandoFazerComentario = commentsService.insert(
-      this.state.comments
-    );
-    console.log(usuarioTentandoFazerComentario);
+
+  componentWillMount() {
+    this.setState({ disabledComment: !loginService.isLogged() });
+  }
+
+  addComment = () => {
+    const { comments } = this.state;
   };
 
   renderComment = () => (
@@ -26,11 +30,13 @@ class CommentsBlock extends Component {
       </p>
       {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
       {console.log(commentsService.get())}
+      {console.log(loginService.isLogged())}
       <FontAwesomeIcon icon='trash' />
     </div>
   );
 
   render() {
+    const { disabledComment } = this.state;
     return (
       <div className='text-left'>
         <div className='my-3 p-3 bg-white rounded shadow-sm'>
@@ -43,7 +49,7 @@ class CommentsBlock extends Component {
           <div className='form-group'>
             <label htmlFor='exampleInputEmail1'>Comment</label>
             <textarea
-              disabled={false}
+              disabled={disabledComment}
               value={this.onChange}
               onChange={e => {
                 e.preventDefault();
@@ -57,7 +63,7 @@ class CommentsBlock extends Component {
           </div>
           <button
             onClick={this.addComment}
-            disabled={false}
+            disabled={disabledComment}
             type='submit'
             className='btn btn-primary'
           >
