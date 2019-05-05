@@ -14,16 +14,12 @@ const HomeRoute = ({ match, searchString }) => (
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
-const RecipePageRoute = () => (
-  <RecipePage
-    recipes={recipes.results[{ title: "Chocolate-Cherry Thumbprints" }]}
-  />
+const RecipePageRoute = ({}) => (
+  <div>
+    <RecipePage recipes={recipes} />
+  </div>
 );
-{
-  console.log([
-    (recipes.results = [{ title: "Chocolate-Cherry Thumbprints" }])
-  ]);
-}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -105,7 +101,6 @@ class App extends Component {
           <Route path='/user/login' component={LoginRoute} />
           <Route path='/user/profile' component={ProfileRoute} />
 
-          {console.log("{match.path}", `${match.path}`)}
           {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
           {console.log("path >>>: ", match.path)}
