@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import commentsService from "../services/commentsService";
 import loginService from "../services/loginService";
+import { matchPath, withRouter } from "react-router";
 
 class CommentsBlock extends Component {
   constructor(props) {
@@ -17,10 +18,18 @@ class CommentsBlock extends Component {
     this.setState({ disabledComment: !loginService.isLogged() });
   }
 
-  addComment = () => {
+  addComment = e => {
+    e.preventDefault();
     const { comments } = this.state;
 
-    const teste = commentsService.insert(comments);
+    const { pathname } = this.props.location;
+    const match = matchPath(pathname, {
+      path: "/recipe/:recipeSlug",
+      exact: true,
+      strict: false
+    });
+
+    const teste = commentsService.insert(match.params, comments);
     console.log("teste", teste);
   };
 
@@ -40,6 +49,7 @@ class CommentsBlock extends Component {
 
   render() {
     const { disabledComment } = this.state;
+    const { match } = this.props;
     return (
       <div className='text-left'>
         <div className='my-3 p-3 bg-white rounded shadow-sm'>
@@ -74,9 +84,11 @@ class CommentsBlock extends Component {
           </button>
         </form>
         {console.log(this.state)}
+        {console.log(match)}
+        {console.log(match.params)}
       </div>
     );
   }
 }
 
-export default CommentsBlock;
+export default withRouter(CommentsBlock);
