@@ -38,7 +38,8 @@ const RecipePage = ({ searchString = "", recipes = [] }) => {
 };
 
 RecipePage.propTypes = {
-  recipe: PropTypes.object
+  searchString: PropTypes.string,
+  recipes: PropTypes.object
 };
 
 export default RecipePage;

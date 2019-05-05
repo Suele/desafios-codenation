@@ -19,6 +19,9 @@ class CommentsBlock extends Component {
 
   addComment = () => {
     const { comments } = this.state;
+
+    const teste = commentsService.insert(comments);
+    console.log("teste", teste);
   };
 
   renderComment = () => (

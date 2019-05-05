@@ -14,8 +14,16 @@ const HomeRoute = ({ match, searchString }) => (
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
-const RecipePageRoute = () => <RecipePage recipes={recipes[0]} />;
-
+const RecipePageRoute = () => (
+  <RecipePage
+    recipes={recipes.results[{ title: "Chocolate-Cherry Thumbprints" }]}
+  />
+);
+{
+  console.log([
+    (recipes.results = [{ title: "Chocolate-Cherry Thumbprints" }])
+  ]);
+}
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,13 +42,10 @@ class App extends Component {
       searchString: path,
       pathName: path
     });
-
-    console.log("pathName: ", pathName);
-    console.log("searchString: ", searchString);
   }
 
   render() {
-    let { searchString, pathName } = this.state;
+    let { searchString } = this.state;
     const { history } = this.props;
 
     const { pathname } = this.props.location;
@@ -62,29 +67,6 @@ class App extends Component {
         <div className='container mt-10'>
           <Route
             exact
-            path='/:searchString'
-            render={() => {
-              return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
-              );
-            }}
-          />
-          <Route
-            exact
-            path='/recipe/:searchString'
-            render={() => {
-              return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
-              );
-            }}
-          />
-
-          <Route
-            exact
             path='/'
             render={() => {
               return (
@@ -96,7 +78,30 @@ class App extends Component {
             }}
           />
 
-          <Route path='/recipe/recipe' component={RecipePageRoute} />
+          <Route
+            exact
+            path='/:searchString'
+            render={() => {
+              return (
+                <Link to={`/recipe/${slugify(searchString)}`}>
+                  <RecipePage searchString={searchString} recipes={recipes} />
+                </Link>
+              );
+            }}
+          />
+          {/* <Route
+            exact
+            path='/recipe/:searchString'
+            render={() => {
+              return (
+                <Link to={`/recipe/${slugify(searchString)}`}>
+                  <RecipePage searchString={searchString} recipes={recipes} />
+                </Link>
+              );
+            }}
+          /> */}
+
+          <Route exact path='/recipe/:recipeSlug' component={RecipePageRoute} />
           <Route path='/user/login' component={LoginRoute} />
           <Route path='/user/profile' component={ProfileRoute} />
 
@@ -104,6 +109,8 @@ class App extends Component {
           {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
           {console.log("path >>>: ", match.path)}
+          {console.log("searchString: ", searchString)}
+          {console.log("recipes ", recipes)}
         </div>
       </div>
     );
@@ -112,7 +119,7 @@ class App extends Component {
 
 App.propTypes = {
   searchString: PropTypes.string,
-  recipe: PropTypes.object
+  recipes: PropTypes.object
 };
 
 export default withRouter(App);
