@@ -14,11 +14,7 @@ const HomeRoute = ({ match, searchString }) => (
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
-const RecipePageRoute = ({}) => (
-  <div>
-    <RecipePage recipes={recipes} />
-  </div>
-);
+const RecipePageRoute = ({}) => <RecipePage recipes={recipes} />;
 
 class App extends Component {
   constructor(props) {
@@ -47,9 +43,9 @@ class App extends Component {
     const { pathname } = this.props.location;
     const match = matchPath(pathname, {
       path: pathname,
-      exact: true
+      exact: true,
+      strict: false
     });
-    console.log("pathname: ", pathname);
 
     return (
       <div className='App'>
@@ -85,17 +81,6 @@ class App extends Component {
               );
             }}
           />
-          {/* <Route
-            exact
-            path='/recipe/:searchString'
-            render={() => {
-              return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
-              );
-            }}
-          /> */}
 
           <Route exact path='/recipe/:recipeSlug' component={RecipePageRoute} />
           <Route path='/user/login' component={LoginRoute} />
@@ -105,7 +90,7 @@ class App extends Component {
           {console.log("match: ", match)}
           {console.log("path >>>: ", match.path)}
           {console.log("searchString: ", searchString)}
-          {console.log("recipes ", recipes)}
+          {console.log("pathname", pathname)}
         </div>
       </div>
     );
