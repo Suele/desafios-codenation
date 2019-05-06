@@ -28,7 +28,6 @@ const Navbar = ({ searchString = "", onchange }) => (
       <Link to='/user/profile'>
         <button className='btn btn-secondary'>
           {loginService.getUser().username}
-          {console.log(loginService.getUser().username)}
         </button>
       </Link>
     ) : (
