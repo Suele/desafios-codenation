@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RecipeItem from "./RecipeItem";
 
-const Home = ({ recipes = [] }) => {
+const Home = ({ recipes = {} }) => {
   if (!recipes.results) return null;
   return recipes.results.map(recipe => (
     <RecipeItem
