@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import commentsService from "../services/commentsService";
 import loginService from "../services/loginService";
-import { matchPath, withRouter } from "react-router";
+import { Link, matchPath, withRouter } from "react-router-dom";
 import { slugify } from "../helpers";
 
 class CommentsBlock extends Component {
@@ -19,8 +19,7 @@ class CommentsBlock extends Component {
     this.setState({ disabledComment: !loginService.isLogged() });
   }
 
-  addComment = e => {
-    e.preventDefault();
+  addComment = () => {
     const { comments } = this.state;
     const { match } = this.props;
     const recipeSlug = slugify(match.params.recipeSlug);
@@ -82,14 +81,16 @@ class CommentsBlock extends Component {
               placeholder='Insert your comment here'
             />
           </div>
-          <button
-            onClick={this.addComment}
-            disabled={disabledComment}
-            type='submit'
-            className='btn btn-primary'
-          >
-            Submit
-          </button>
+          <Link to={pathname}>
+            <button
+              onClick={this.addComment}
+              disabled={disabledComment}
+              type='submit'
+              className='btn btn-primary'
+            >
+              Submit
+            </button>
+          </Link>
         </form>
         {console.log(this.state)}
         {console.log(match)}
