@@ -28,23 +28,36 @@ class CommentsBlock extends Component {
     console.log("teste", teste);
   };
 
+  deleteComment = e => {
+    const { match } = this.props;
+    const recipeSlug = slugify(match.params.recipeSlug);
+
+    const testeDeDeletar = delete (recipeSlug, e.target.value);
+    console.log(testeDeDeletar);
+  };
+
   renderComment = () => {
     const { match } = this.props;
     const recipeSlug = slugify(match.params.recipeSlug);
-    commentsService.get(recipeSlug).map(commentUser => {
+
+    return commentsService.get(recipeSlug).map(commentUser => {
       return (
-        <div className='Comment media text-muted pt-3'>
+        <div className='Comment media text-muted pt-3' key={commentUser.author}>
           <FontAwesomeIcon className='mr-2' size='3x' icon='user-circle' />
-          <p className='media-body pb-3 mb-0 small lh-125 border-bottom border-gray'>
+          <p
+            className='media-body pb-3 mb-0 small lh-125 border-bottom border-gray'
+            key={commentUser.author}
+          >
             <strong className='d-block text-gray-dark'>
-              {console.log("author", commentUser.author)}
-              {console.log("date", commentUser.date)}
+              {commentUser.author}
+              {commentUser.date}
             </strong>
-            {console.log("comentario", commentUser[0])}
+            {commentUser[0]}
           </p>
           {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
-          {/* {console.log(commentsService.get(recipeSlug))} */}
-          <FontAwesomeIcon icon='trash' />
+          {commentUser.author === loginService.getUser().username && (
+            <FontAwesomeIcon icon='trash' onClick={this.deleteComment} />
+          )}
         </div>
       );
     });
