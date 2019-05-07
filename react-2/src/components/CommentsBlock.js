@@ -28,26 +28,34 @@ class CommentsBlock extends Component {
     console.log("teste", teste);
   };
 
-  deleteComment = e => {
+  deleteComment = index => {
     const { match } = this.props;
+    const { comments } = this.state;
     const recipeSlug = slugify(match.params.recipeSlug);
 
-    const testeDeDeletar = delete (recipeSlug, e.target.value);
+    const newComments = comments.filter(comment => {
+      return comment !== index;
+    });
+
+    this.setState({ comments: [...newComments] });
+    console.log(newComments);
+    console.log(comments);
+
+    const testeDeDeletar = commentsService.delete(recipeSlug, newComments);
     console.log(testeDeDeletar);
+    console.log("index:", index);
   };
 
   renderComment = () => {
     const { match } = this.props;
+    const { pathname } = this.props.location;
     const recipeSlug = slugify(match.params.recipeSlug);
 
-    return commentsService.get(recipeSlug).map(commentUser => {
+    return commentsService.get(recipeSlug).map((commentUser, index) => {
       return (
-        <div className='Comment media text-muted pt-3' key={commentUser.author}>
+        <div className='Comment media text-muted pt-3' key={commentUser.date}>
           <FontAwesomeIcon className='mr-2' size='3x' icon='user-circle' />
-          <p
-            className='media-body pb-3 mb-0 small lh-125 border-bottom border-gray'
-            key={commentUser.author}
-          >
+          <p className='media-body pb-3 mb-0 small lh-125 border-bottom border-gray'>
             <strong className='d-block text-gray-dark'>
               {commentUser.author}
               {commentUser.date}
@@ -56,7 +64,12 @@ class CommentsBlock extends Component {
           </p>
           {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
           {commentUser.author === loginService.getUser().username && (
-            <FontAwesomeIcon icon='trash' onClick={this.deleteComment} />
+            <Link to={pathname}>
+              <FontAwesomeIcon
+                icon='trash'
+                onClick={() => commentsService.delete(recipeSlug, commentUser)}
+              />
+            </Link>
           )}
         </div>
       );
