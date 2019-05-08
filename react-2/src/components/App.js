@@ -14,7 +14,9 @@ const HomeRoute = ({ match, searchString }) => (
 );
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
-const RecipePageRoute = ({}) => <RecipePage recipes={recipes} />;
+const RecipePageRoute = ({ match }) => (
+  <RecipePage recipes={recipes} match={match} />
+);
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const { pathName, searchString } = this.state;
+    const { pathName } = this.state;
 
     let path = pathName.replace("/", "");
 

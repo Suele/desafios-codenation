@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import { Switch, Route, withRouter, Link, matchPath } from "react-router-dom";
+import { Route, withRouter, matchPath } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import RecipePage from "./RecipePage";
-import { slugify } from "../helpers";
 import recipes from "../sample_data/recipes.json";
+import { slugify } from "../helpers";
 import PropTypes from "prop-types";
-
-const NoMatch = ({}) => (
-  <div>
-    <h3>
-      <h1>Não foi possível encontrar sua receita ou ingrediente.</h1>
-    </h3>
-  </div>
-);
 
 class App extends Component {
   constructor(props) {
@@ -45,7 +37,7 @@ class App extends Component {
 
     const { pathname } = this.props.location;
     const match = matchPath(pathname, {
-      path: pathname,
+      path: "/recipe/:searchString",
       exact: true
     });
 
@@ -66,38 +58,45 @@ class App extends Component {
           <Route
             exact
             path='/'
-            render={() => {
-              return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <Home recipes={recipes} searchString={searchString} />
-                </Link>
-              );
+            render={({
+              match: {
+                params: { searchString }
+              }
+            }) => {
+              return <Home recipes={recipes} searchString={searchString} />;
             }}
           />
+
           <Route
-            exact
             path='/:searchString'
-            render={({ match }) => {
+            render={({
+              match: {
+                params: { searchString }
+              }
+            }) => {
               return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
+                <RecipePage searchString={searchString} recipes={recipes} />
               );
             }}
           />
           <Route
             exact
             path='/recipe/:searchString'
-            render={({ match }) => {
+            render={({
+              match: {
+                params: { searchString }
+              }
+            }) => {
               return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
+                <RecipePage searchString={searchString} recipes={recipes} />
               );
             }}
           />
-          <Route path={"*"} render={() => <NoMatch />} />
-          {console.log(slugify(searchString))}
+          <Route
+            render={() => (
+              <h1>Não foi possível encontrar sua receita ou ingrediente.</h1>
+            )}
+          />
           {console.log("match: ", match)}
         </div>
       </div>
