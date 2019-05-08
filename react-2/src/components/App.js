@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, withRouter, Link, matchPath } from "react-router-dom";
+import { Route, withRouter, matchPath } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import RecipePage from "./RecipePage";
@@ -41,10 +41,10 @@ class App extends Component {
   render() {
     let { searchString } = this.state;
     const { history } = this.props;
-
     const { pathname } = this.props.location;
+
     const match = matchPath(pathname, {
-      path: pathname,
+      path: "/recipe/:recipeSlug",
       exact: true,
       strict: false
     });
@@ -63,22 +63,19 @@ class App extends Component {
             exact
             path='/'
             render={() => {
-              return (
-                <HomeRoute
-                  match={`${match.path}`}
-                  searchString={searchString}
-                />
-              );
+              return <HomeRoute match={match} searchString={searchString} />;
             }}
           />
 
           <Route
-            exact
             path='/:searchString'
-            render={() => {
+            render={({
+              match: {
+                params: { searchString }
+              }
+            }) => {
               return (
-                  <RecipePage searchString={searchString} recipes={recipes} />
-                </Link>
+                <RecipePage searchString={searchString} recipes={recipes} />
               );
             }}
           />
@@ -89,7 +86,6 @@ class App extends Component {
 
           {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
-          {console.log("path >>>: ", match.path)}
           {console.log("searchString: ", searchString)}
           {console.log("pathname", pathname)}
         </div>
