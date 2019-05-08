@@ -79,6 +79,7 @@ class App extends Component {
               );
             }}
           />
+
           <Route
             exact
             path='/recipe/:searchString'
@@ -92,6 +93,7 @@ class App extends Component {
               );
             }}
           />
+
           <Route
             render={() => (
               <h1>Não foi possível encontrar sua receita ou ingrediente.</h1>
