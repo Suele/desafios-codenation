@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { slugify } from "../helpers";
 
 const RecipeItem = ({ title, thumbnail, ingredients }) => (
   <Link to={`/recipe/${title}`}>
