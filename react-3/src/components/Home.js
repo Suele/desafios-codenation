@@ -12,6 +12,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        {console.log("teste name:", getRecipesByName("ginger", 1))}
         <div className='row'>
           <RecipeItem />
           <RecipeItem />
