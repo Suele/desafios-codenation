@@ -17,17 +17,8 @@ class Home extends Component {
     let verificaNomes = getRecipesByName("g", 1).then(results=>console.log("test Names with filter: ", results));
     return (
       <div>
-<<<<<<< HEAD
         <div className="row">
           <RecipeItem recipes={ getRecipesByName(title, page).then(results=> console.log(results))}/>
-=======
-        {console.log("teste name:", getRecipesByName("ginger", 1))}
-        <div className='row'>
-          <RecipeItem />
-          <RecipeItem />
-          <RecipeItem />
-          <RecipeItem />
->>>>>>> 8427a4352aff197af764051e534d39d5882e9f69
         </div>
         <div className="d-flex justify-content-center">
           <nav>
