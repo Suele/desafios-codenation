@@ -8,17 +8,37 @@ class Home extends Component {
     super(props);
     this.state = {
       title: "",
-      page: 1
+      page: 1,
+      recipes: []
     };
   }
 
+  componentDidMount(){
+    getRecipesByName("", 4)
+    .then(results => {
+      this.setState({recipes: results})
+      console.log("recipes: ", this.state.recipes);
+    })
+  }
+
   render() {
-    const {title, page} = this.state
-    let verificaNomes = getRecipesByName("g", 1).then(results=>console.log("test Names with filter: ", results));
+    const {recipes} = this.state;
+
     return (
       <div>
         <div className="row">
-          <RecipeItem recipes={ getRecipesByName(title, page).then(results=> console.log(results))}/>
+        {
+        recipes.map(recipe => {
+          return(
+            <RecipeItem
+            key={recipe.title}
+            thumbnail={recipe.thumbnail}
+            title={recipe.title}
+            ingredients={recipe.ingredients}
+          />
+          );
+        })
+        }
         </div>
         <div className="d-flex justify-content-center">
           <nav>
