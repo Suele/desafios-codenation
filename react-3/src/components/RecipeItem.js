@@ -2,20 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const RecipeItem = ({ recipe = {} }) => (
+const RecipeItem = ({ title, ingredients, thumbnail}) => (
   <div className='RecipeItem col-sm-3 mt-3 mb-3'>
     <div className='card'>
       <Link to={`/recipe`}>
         <img
           className='card-img-top img-fluid'
-          src={recipe.thumbnail || "https://via.placeholder.com/350x260"}
-          alt={recipe.title}
+          src={thumbnail || "https://via.placeholder.com/350x260"}
+          alt={title}
         />
-        <div className='card-body'>
-          <h5 className='card-title'>{recipe.title}</h5>
+        <div className='card-body' key={title}>
+          <h5 className='card-title'>{title}</h5>
           <p className='card-text'>
             <strong>Ingredients: </strong>
-            {recipe.ingredients}
+            {ingredients}
           </p>
         </div>
       </Link>
