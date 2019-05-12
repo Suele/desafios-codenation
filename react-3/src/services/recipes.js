@@ -14,7 +14,7 @@ const getRecipesByIngredients = (ingredients, page = 1) => {
           );
         })
         .map(recipe => {
-          console.log("recipe ingredients:", [recipe.ingredients]);
+          //console.log("recipe ingredients:", [recipe.ingredients]);
           return [recipe.ingredients];
         });
     });
@@ -22,7 +22,7 @@ const getRecipesByIngredients = (ingredients, page = 1) => {
 const getRecipesByName = (title, page = 1) => {
   // TODO implementar método
 
-  return fetch(API_PATH)
+  return fetch(`${API_PATH}?q=${title}&p=${page}`)
     .then(response => response.json())
     .then(recipes => {
       return recipes.results
@@ -30,15 +30,10 @@ const getRecipesByName = (title, page = 1) => {
           return recipe.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
         })
         .map(recipe => {
-          console.log("recipe title:", [recipe.title]);
-          return recipe.title;
+          //console.log("recipe title:", recipe);
+          return recipe;
         });
-      console.log("recipes2:", [recipes.results]);
-      console.log("recipes1: ", recipes);
     });
 };
-
-getRecipesByIngredients("sugar");
-getRecipesByName("Ginger Champagne");
 
 export { getRecipesByIngredients, getRecipesByName };
