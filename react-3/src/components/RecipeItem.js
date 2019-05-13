@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import slugify from "../helpers";
 
-const RecipeItem = ({ title, ingredients, thumbnail}) => (
+const RecipeItem = ({ title, ingredients, thumbnail }) => (
   <div className='RecipeItem col-sm-3 mt-3 mb-3'>
     <div className='card'>
-      <Link to={`/recipe/${title}`}>
+      <Link to={`/recipe/${slugify(title)}`}>
         <img
           className='card-img-top img-fluid'
           src={thumbnail || "https://via.placeholder.com/350x260"}
