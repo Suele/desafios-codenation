@@ -9,17 +9,27 @@ class App extends Component {
     super(props);
 
     this.state = {
-      searchString: ""
+    
     };
   }
 
   render() {
     const HomeRoute = ({ match, recipes, searchString }) => (
-      <Home match={match} recipes={recipes} searchString={searchString}/>
+      <Home
+        match={match.params.searchString}
+        recipes={recipes}
+        searchString={searchString}
+      />
     );
 
-    const RecipePageRoute = () => <RecipePage />;
-
+    const RecipePageRoute = ({ match, recipes, searchString }) => (
+      <RecipePage
+        match={match.params.searchString}
+        recipes={recipes}
+        searchString={searchString}
+      />
+    );
+    const { history } = this.props;
     return (
       <div className="App">
         <Route
@@ -28,6 +38,7 @@ class App extends Component {
           children={({ match }) => (
             <Navbar
               searchString={match ? match.params.searchString || "" : ""}
+              history={searchString => this.setState({searchString:  match.params.searchString}, history.push(`/search/${searchString}`))}
             />
           )}
         />
@@ -39,6 +50,7 @@ class App extends Component {
             <Redirect to="/search" />
           </Switch>
         </div>
+        {console.log(this.state)}
       </div>
     );
   }

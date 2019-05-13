@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import RecipeItem from "./RecipeItem";
 import { getRecipesByName } from "../services/recipes";
-import { Link } from "react-router-dom"; 
 
 class Home extends Component {
   constructor(props) {
@@ -10,52 +9,64 @@ class Home extends Component {
     this.state = {
       title: "",
       page: 1,
-      recipes: [],
-      
+      recipes: []
     };
   }
 
   componentDidMount() {
-    const { title,  page} = this.state;
+    const { title, page } = this.state;
+    const { match } = this.props;
 
-    getRecipesByName(title, page).then(results => {
-      this.setState({ recipes: results });
-      console.log("recipes: ", this.state.recipes);
-    });
+    if (!match) {
+      getRecipesByName(title, page).then(results => {
+        this.setState({ recipes: results });
+        console.log("recipes: ", this.state.recipes);
+      });
+    } else {
+      getRecipesByName(match, page).then(results => {
+        this.setState({ recipes: results });
+        console.log(
+          "recipes match: ",
+          this.state.recipes,
+          "page match: ",
+          page
+        );
+      });
+    }
   }
 
   previousRecipes = () => {
-    const {title, page } = this.state;
-    
-    if(page >= 1){
-      this.setState({page: (page - 1)});
-  
+    const { title, page } = this.state;
+
+    if (page >= 1) {
+      this.setState({ page: page - 1 });
+
       return getRecipesByName(title, this.state.page).then(results => {
         this.setState({ recipes: results });
         console.log("recipes: ", this.state.recipes);
         console.log("previousRecipes: ", page);
       });
     }
-    if(page === 0){
-      this.setState({page: (page + 1)});
+    if (page === 0) {
+      this.setState({ page: page + 1 });
     }
     console.log("previousRecipes: ", page);
-  }
+  };
 
   nextRecipes = () => {
-    const {title, page } = this.state;
+    const { title, page } = this.state;
 
-    this.setState({page: (page + 1)});
+    this.setState({ page: page + 1 });
 
     return getRecipesByName(title, this.state.page).then(results => {
       this.setState({ recipes: results });
       console.log("recipes: ", this.state.recipes);
       console.log("nextRecipes: ", page);
     });
-  }
+  };
 
   render() {
-    const {recipes } = this.state;
+    const { recipes } = this.state;
 
     return (
       <div>
@@ -75,16 +86,22 @@ class Home extends Component {
           <nav>
             <ul className="pagination">
               <li className="page-item">
-                <button onClick={this.previousRecipes} id="prev" className="page-link">
+                <button
+                  onClick={this.previousRecipes}
+                  id="prev"
+                  className="page-link"
+                >
                   Previous
                 </button>
               </li>
               <li className="page-item">
-              
-                <button onClick={this.nextRecipes} id="next" className="page-link">
+                <button
+                  onClick={this.nextRecipes}
+                  id="next"
+                  className="page-link"
+                >
                   Next
                 </button>
-                
               </li>
             </ul>
           </nav>
