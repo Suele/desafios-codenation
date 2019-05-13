@@ -49,6 +49,28 @@ class RecipePage extends Component {
             </div>
           );
         })}
+    const { thumbnail, title, ingredients } = this.state.recipe;
+    const {match} = this.props;
+    
+    return (
+      <div>
+        <img src={thumbnail} alt={title} />
+        <div className="card-body">
+          <h5 className="card-title">{title}</h5>
+          <p className="card-text">
+            <strong>Ingredients: </strong>
+            {ingredients}
+          </p>
+          <h5 className="card-title">Similar recipes</h5>
+          <div className="row">
+            <RecipeItem />
+            <RecipeItem />
+            <RecipeItem />
+            <RecipeItem />
+          </div>
+        </div>
+        {console.log(this.state)}
+        {console.log(match)}
       </div>
     );
   }
