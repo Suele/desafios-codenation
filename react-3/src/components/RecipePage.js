@@ -12,15 +12,20 @@ class RecipePage extends Component {
   }
 
   componentDidMount() {
-    const { page } = this.state;
+    const { title, page } = this.state;
     const { match } = this.props;
 
-    if (match) {
-      getRecipesByName(match, page).then(results => {
+    if (match === title) {
+      getRecipesByName(title, page).then(results => {
         this.setState({ recipe: results });
-        console.log("recipes: ", this.state.recipe);
+        console.log("selectedRecipe: ", this.state.recipe);
+        console.log("ola");
       });
     }
+    console.log("ola");
+    getRecipesByIngredients("eggs", 1).then(resultsIngredients => {
+      console.log("resultsIngre: ", resultsIngredients);
+    });
   }
 
   render() {
@@ -32,7 +37,7 @@ class RecipePage extends Component {
           return (
             <div>
               <img src={selectedRecipe.thumbnail} alt={selectedRecipe.title} />
-              <div className='card-body'>
+              <div className='card-body' key={selectedRecipe.thumbnail}>
                 <h5 className='card-title'>{selectedRecipe.title}</h5>
                 <p className='card-text'>
                   <strong>Ingredients: </strong>
@@ -49,35 +54,13 @@ class RecipePage extends Component {
             </div>
           );
         })}
-    const { thumbnail, title, ingredients } = this.state.recipe;
-    const {match} = this.props;
-    
-    return (
-      <div>
-        <img src={thumbnail} alt={title} />
-        <div className="card-body">
-          <h5 className="card-title">{title}</h5>
-          <p className="card-text">
-            <strong>Ingredients: </strong>
-            {ingredients}
-          </p>
-          <h5 className="card-title">Similar recipes</h5>
-          <div className="row">
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
-          </div>
-        </div>
-        {console.log(this.state)}
-        {console.log(match)}
       </div>
     );
   }
 }
 
 RecipePage.propTypes = {
-  recipes: PropTypes.array
+  recipe: PropTypes.array
 };
 
 export default RecipePage;
