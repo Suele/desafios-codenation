@@ -41,7 +41,7 @@ class Home extends Component {
     if (page >= 1) {
       this.setState({ page: page - 1 });
 
-      return getRecipesByName(title, this.state.page).then(results => {
+      return getRecipesByName(title, page).then(results => {
         this.setState({ recipes: results });
         console.log("recipes: ", this.state.recipes);
         console.log("previousRecipes: ", page);
@@ -61,7 +61,7 @@ class Home extends Component {
     return getRecipesByName(title, this.state.page).then(results => {
       this.setState({ recipes: results });
       console.log("recipes: ", this.state.recipes);
-      console.log("nextRecipes: ", page);
+      console.log("nextRecipes: ", this.state.page);
     });
   };
 
