@@ -5,14 +5,6 @@ import Home from "./Home";
 import RecipePage from "./RecipePage";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    
-    };
-  }
-
   render() {
     const HomeRoute = ({ match, recipes, searchString }) => (
       <Home
@@ -22,11 +14,10 @@ class App extends Component {
       />
     );
 
-    const RecipePageRoute = ({ match, recipes, searchString }) => (
+    const RecipePageRoute = ({ match, recipes }) => (
       <RecipePage
-        match={match.params.searchString}
+        match={match.params.title}
         recipes={recipes}
-        searchString={searchString}
       />
     );
     const { history } = this.props;
@@ -38,19 +29,23 @@ class App extends Component {
           children={({ match }) => (
             <Navbar
               searchString={match ? match.params.searchString || "" : ""}
-              history={searchString => this.setState({searchString:  match.params.searchString}, history.push(`/search/${searchString}`))}
+              history={searchString =>
+                this.setState(
+                  { searchString: match.params.searchString },
+                  history.push(`/search/${searchString}`)
+                )
+              }
             />
           )}
         />
 
         <div className="container mt-10">
           <Switch>
-            <Route exact path="/recipe" component={RecipePageRoute} />
+            <Route exact path="/recipe/:title" component={RecipePageRoute} />
             <Route path="/search/:searchString?" component={HomeRoute} />
             <Redirect to="/search" />
           </Switch>
         </div>
-        {console.log(this.state)}
       </div>
     );
   }

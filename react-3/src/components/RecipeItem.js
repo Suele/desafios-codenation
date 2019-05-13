@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const RecipeItem = ({ title, ingredients, thumbnail}) => (
   <div className='RecipeItem col-sm-3 mt-3 mb-3'>
     <div className='card'>
-      <Link to={`/recipe`}>
+      <Link to={`/recipe/${title}`}>
         <img
           className='card-img-top img-fluid'
           src={thumbnail || "https://via.placeholder.com/350x260"}

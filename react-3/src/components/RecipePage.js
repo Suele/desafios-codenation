@@ -15,7 +15,7 @@ class RecipePage extends Component {
   render() {
     const { thumbnail, title, ingredients } = this.state.recipe;
     const {match} = this.props;
-
+    
     return (
       <div>
         <img src={thumbnail} alt={title} />
@@ -33,6 +33,7 @@ class RecipePage extends Component {
             <RecipeItem />
           </div>
         </div>
+        {console.log(this.state)}
         {console.log(match)}
       </div>
     );
