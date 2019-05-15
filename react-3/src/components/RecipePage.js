@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import RecipeItem from "./RecipeItem";
 import { getRecipesByName, getRecipesByIngredients } from "../services/recipes";
 
@@ -7,76 +6,94 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: "",
-      recipe: [],
-      recipeSelected: []
+      page: 1,
+      recipe: {
+        thumbnail: "",
+        title: "",
+        ingredients: ""
+      },
+      similarRecipes: []
     };
   }
 
-  componentDidMount() {
-    const { title, page, ingredients } = this.state;
+  componentWillMount() {
+    const { page } = this.state;
     const { match } = this.props;
-    const {recipe, recipeSelected} = this.state;
 
-    if (match) {
-      getRecipesByName(match, page).then(results => {
-        return(
-          this.setState({ recipe: results, recipeSelected: results})
-          );
+    getRecipesByName(match, page)
+      .then(results => {
+        results
+          .filter(result => {
+            return result.title === match;
+          })
+          .map(result => {
+            console.log(result);
+            return this.setState({ recipe: result });
+          });
+      })
+      .catch(error => console.log(error));
+  }
 
-        getRecipesByIngredients(recipeSelected, page).then(results =>{
-          return(
-            console.log("recipeSelected: ", this.state.recipeSelected),
-            this.setState({ recipeSelected: results })
-            );
+  componentDidMount() {
+    const { page } = this.state;
+    const { match } = this.props;
+
+    console.log("estou dentro do componentDidMount");
+
+    getRecipesByName(match, page).then(results => {
+      results
+        .filter(result => {
+          return result.title === match;
         })
-      });
-    } 
-    console.log("selectedRecipe: ", this.state.recipe);
-    console.log("recipeSelected: ", this.state.recipeSelected);
+        .map(result => {
+          console.log("result: ", result);
+          console.log("result.ingredients: ", result.ingredients);
+          return getRecipesByIngredients(result.ingredients, page).then(
+            resultsIngredients => {
+              console.log(resultsIngredients);
+              this.setState({ similarRecipes: resultsIngredients });
+              console.log("similarRecipes: ", this.state.similarRecipes);
+            }
+          );
+        });
+    });
   }
 
   render() {
-    const { recipe, recipeSelected } = this.state;
+    const { thumbnail, title, ingredients } = this.state.recipe;
+    const { recipe, similarRecipes } = this.state;
 
+    console.log(recipe.title);
     return (
       <div>
-        {recipe.map(selectedRecipe => {
-          return (
-            <div>
-              <img src={selectedRecipe.thumbnail} alt={selectedRecipe.title} />
-              <div className="card-body" key={selectedRecipe.thumbnail}>
-                <h5 className="card-title">{selectedRecipe.title}</h5>
-                <p className="card-text">
-                  <strong>Ingredients: </strong>
-                  {selectedRecipe.ingredients}
-                </p>
-                <h5 className="card-title">Similar recipes</h5>
-                <div className="row">
-                {
-                  recipeSelected.map(teste =>{
-                    return(
-                      <RecipeItem
-                        key={teste.title}
-                        thumbnail={teste.thumbnail}
-                        title={teste.title}
-                        ingredients={teste.ingredients}
-                      />
-                      );
-                  })
-                }
-                </div>
-              </div>
+        {
+          <div>
+            <img src={thumbnail} alt={title} />
+            <div className='card-body'>
+              <h5 className='card-title'>{title}</h5>
+              <p className='card-text'>
+                <strong>Ingredients: </strong>
+                {ingredients}
+              </p>
             </div>
-          );
-        })}
+          </div>
+        }
+        <h5 className='card-title'>Similar recipes</h5>
+        <div className='row'>
+          {similarRecipes.map(similarRecipe => {
+            return (
+              <RecipeItem
+                key={similarRecipe.title}
+                thumbnail={similarRecipe.thumbnail}
+                title={similarRecipe.title}
+                ingredients={similarRecipe.ingredients}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
 }
-
-RecipePage.propTypes = {
-  recipe: PropTypes.array
-};
 
 export default RecipePage;
