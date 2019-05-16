@@ -60,35 +60,42 @@ class RecipePage extends Component {
   render() {
     const { thumbnail, title, ingredients } = this.state.recipe;
     const { recipe, similarRecipes } = this.state;
+    const { match } = this.props;
 
+    console.log(match);
     console.log(recipe.title);
     return (
       <div>
-        {
+        {recipe.title ? (
           <div>
-            <img src={thumbnail} alt={title} />
-            <div className='card-body'>
-              <h5 className='card-title'>{title}</h5>
-              <p className='card-text'>
-                <strong>Ingredients: </strong>
-                {ingredients}
-              </p>
+            <div>
+              <img src={thumbnail} alt={title} />
+              <div className='card-body'>
+                <h5 className='card-title'>{title}</h5>
+                <p className='card-text'>
+                  <strong>Ingredients: </strong>
+                  {ingredients}
+                </p>
+              </div>
+            </div>
+
+            <h5 className='card-title'>Similar recipes</h5>
+            <div className='row'>
+              {similarRecipes.map(similarRecipe => {
+                return (
+                  <RecipeItem
+                    key={similarRecipe.ingredients}
+                    thumbnail={similarRecipe.thumbnail}
+                    title={similarRecipe.title}
+                    ingredients={similarRecipe.ingredients}
+                  />
+                );
+              })}
             </div>
           </div>
-        }
-        <h5 className='card-title'>Similar recipes</h5>
-        <div className='row'>
-          {similarRecipes.map(similarRecipe => {
-            return (
-              <RecipeItem
-                key={similarRecipe.ingredients}
-                thumbnail={similarRecipe.thumbnail}
-                title={similarRecipe.title}
-                ingredients={similarRecipe.ingredients}
-              />
-            );
-          })}
-        </div>
+        ) : (
+          <h1>No Result to show {match}</h1>
+        )}
       </div>
     );
   }

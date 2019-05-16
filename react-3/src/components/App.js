@@ -17,7 +17,7 @@ class App extends Component {
     const RecipePageRoute = ({ match, recipes }) => (
       <RecipePage match={match.params.title} recipes={recipes} />
     );
-    const { history } = this.props;
+    const { history, match } = this.props;
     return (
       <div className='App'>
         <Route
@@ -39,9 +39,10 @@ class App extends Component {
         <div className='container mt-10'>
           <Switch>
             <Route exact path='/recipe/:title' component={RecipePageRoute} />
-            <Route path='/search/:searchString?' component={HomeRoute} />
-            <Redirect to='/search' />
+            <Route exact path='/search/:searchString?' component={HomeRoute} />
+            <Route exact render={() => <Redirect to='/search' />} />
           </Switch>
+          {console.log("match: ", match)}
         </div>
       </div>
     );
