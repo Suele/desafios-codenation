@@ -69,7 +69,10 @@ class RecipePage extends Component {
         {recipe.title ? (
           <div>
             <div>
-              <img src={thumbnail} alt={title} />
+              <img
+                src={thumbnail || "https://via.placeholder.com/350x260"}
+                alt={title}
+              />
               <div className='card-body'>
                 <h5 className='card-title'>{title}</h5>
                 <p className='card-text'>
