@@ -82,46 +82,52 @@ class Home extends Component {
 
   render() {
     const { recipes } = this.state;
+    const { match } = this.props;
 
     return (
       <div>
-        <div className='row'>
-          {recipes.map(recipe => {
-            return (
-              <RecipeItem
-                key={recipe.ingredients}
-                thumbnail={recipe.thumbnail}
-                title={recipe.title}
-                ingredients={recipe.ingredients}
-              />
-            );
-          })}
-        </div>
-        <div className='d-flex justify-content-center'>
-          <nav>
-            <ul className='pagination'>
-              <li className='page-item'>
-                <button
-                  onClick={this.previousRecipes}
-                  id='prev'
-                  className='page-link'
-                >
-                  Previous
-                </button>
-              </li>
-              <li className='page-item'>
-                <button
-                  onClick={this.nextRecipes}
-                  id='next'
-                  className='page-link'
-                >
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        {console.log(this.state)}
+        {recipes.length > 0 ? (
+          <div>
+            <div className='row'>
+              {recipes.map(recipe => {
+                return (
+                  <RecipeItem
+                    key={recipe.ingredients}
+                    thumbnail={recipe.thumbnail}
+                    title={recipe.title}
+                    ingredients={recipe.ingredients}
+                  />
+                );
+              })}
+            </div>
+            <div className='d-flex justify-content-center'>
+              <nav>
+                <ul className='pagination'>
+                  <li className='page-item'>
+                    <button
+                      onClick={this.previousRecipes}
+                      id='prev'
+                      className='page-link'
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  <li className='page-item'>
+                    <button
+                      onClick={this.nextRecipes}
+                      id='next'
+                      className='page-link'
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        ) : (
+          <h1>No Result to show {match}</h1>
+        )}
       </div>
     );
   }
