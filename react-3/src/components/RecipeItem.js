@@ -11,7 +11,7 @@ const RecipeItem = ({ title, ingredients, thumbnail }) => (
           src={thumbnail || "https://via.placeholder.com/350x260"}
           alt={title}
         />
-        <div className='card-body' key={title}>
+        <div className='card-body' key={ingredients}>
           <h5 className='card-title'>{title}</h5>
           <p className='card-text'>
             <strong>Ingredients: </strong>
