@@ -1,22 +1,15 @@
 import { getRecipesByIngredients, getRecipesByName } from "./recipes";
 
-jest.mock("../services/recipes", () => ({
-  getRecipesByName: jest.fn(async () => []),
-  getRecipesByIngredients: jest.fn(async () => [])
-}));
-
 describe("RecipesService", () => {
-  test("getRecipesByName success", done => {
-    return getRecipesByName().then(data => {
-      expect(data).toBe(data);
-      done();
-    });
+  test("getRecipesByName success", () => {
+    const result = getRecipesByName();
+
+    expect(result).toHaveLength(0);
   });
 
-  test("getRecipesByIngredients success", done => {
+  test("getRecipesByIngredients success", () => {
     const result = getRecipesByIngredients();
 
-    expect(result).toBe(result);
-    done();
+    expect(result).toHaveLength(0);
   });
 });
