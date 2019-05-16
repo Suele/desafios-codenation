@@ -37,30 +37,45 @@ class Home extends Component {
 
   previousRecipes = () => {
     const { title, page } = this.state;
+    const { match } = this.props;
 
     if (page >= 1) {
       this.setState({ page: page - 1 });
+    }
 
-      return getRecipesByName(title, page).then(results => {
+    if (match) {
+      return getRecipesByName(match, page).then(results => {
         this.setState({ recipes: results });
         console.log("recipes: ", this.state.recipes);
         console.log("previousRecipes: ", page);
       });
     }
-    if (page === 0) {
-      this.setState({ page: page + 1 });
-    }
-    console.log("previousRecipes: ", page);
+
+    return getRecipesByName(title, page).then(results => {
+      this.setState({ recipes: results });
+      console.log("recipes: ", this.state.recipes);
+      console.log("previousRecipes: ", page);
+    });
   };
 
   nextRecipes = () => {
     const { title, page } = this.state;
+    const { match } = this.props;
 
     this.setState({ page: page + 1 });
 
-    return getRecipesByName(title, this.state.page).then(results => {
+    if (match) {
+      return getRecipesByName(match, page).then(results => {
+        this.setState({ recipes: results });
+        console.log("recipes: ", this.state.recipes);
+        console.log("match", match);
+        console.log("nextRecipes: ", this.state.page);
+      });
+    }
+    return getRecipesByName(title, page).then(results => {
       this.setState({ recipes: results });
       console.log("recipes: ", this.state.recipes);
+      console.log("title", title);
       console.log("nextRecipes: ", this.state.page);
     });
   };
@@ -70,11 +85,11 @@ class Home extends Component {
 
     return (
       <div>
-        <div className="row">
+        <div className='row'>
           {recipes.map(recipe => {
             return (
               <RecipeItem
-                key={recipe.title}
+                key={recipe.ingredients}
                 thumbnail={recipe.thumbnail}
                 title={recipe.title}
                 ingredients={recipe.ingredients}
@@ -82,23 +97,23 @@ class Home extends Component {
             );
           })}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className='d-flex justify-content-center'>
           <nav>
-            <ul className="pagination">
-              <li className="page-item">
+            <ul className='pagination'>
+              <li className='page-item'>
                 <button
                   onClick={this.previousRecipes}
-                  id="prev"
-                  className="page-link"
+                  id='prev'
+                  className='page-link'
                 >
                   Previous
                 </button>
               </li>
-              <li className="page-item">
+              <li className='page-item'>
                 <button
                   onClick={this.nextRecipes}
-                  id="next"
-                  className="page-link"
+                  id='next'
+                  className='page-link'
                 >
                   Next
                 </button>
