@@ -38,8 +38,6 @@ class RecipePage extends Component {
     const { page } = this.state;
     const { match } = this.props;
 
-    console.log("estou dentro do componentDidMount");
-
     getRecipesByName(match, page).then(results => {
       results
         .filter(result => {
@@ -62,6 +60,7 @@ class RecipePage extends Component {
   render() {
     const { thumbnail, title, ingredients } = this.state.recipe;
     const { recipe, similarRecipes } = this.state;
+    const { match } = this.props;
 
     console.log(recipe.title);
     return (
@@ -83,7 +82,7 @@ class RecipePage extends Component {
           {similarRecipes.map(similarRecipe => {
             return (
               <RecipeItem
-                key={similarRecipe.title}
+                key={similarRecipe.ingredients}
                 thumbnail={similarRecipe.thumbnail}
                 title={similarRecipe.title}
                 ingredients={similarRecipe.ingredients}
