@@ -48,8 +48,7 @@ class RecipePage extends Component {
           console.log("result.ingredients: ", result.ingredients);
           return getRecipesByIngredients(result.ingredients, page).then(
             resultsIngredients => {
-              console.log(resultsIngredients);
-              this.setState({ similarRecipes: resultsIngredients });
+              this.setState({ similarRecipes: resultsIngredients.slice(0, 4) });
               console.log("similarRecipes: ", this.state.similarRecipes);
             }
           );
