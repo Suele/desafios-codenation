@@ -60,7 +60,6 @@ class RecipePage extends Component {
   render() {
     const { thumbnail, title, ingredients } = this.state.recipe;
     const { recipe, similarRecipes } = this.state;
-    const { match } = this.props;
 
     console.log(recipe.title);
     return (
