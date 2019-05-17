@@ -9,14 +9,12 @@ import { slugify } from "../helpers";
 import recipes from "../sample_data/recipes.json";
 import PropTypes from "prop-types";
 
-const HomeRoute = ({ match, searchString }) => (
-  <Home recipes={recipes} searchString={searchString} match={match} />
-);
+const HomeRoute = ({}) => <Home recipes={recipes} />;
 
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
-const RecipePageRoute = ({ match }) => (
-  <RecipePage recipes={recipes} match={match.params.recipeSlug} />
+const RecipePageRoute = ({ match, searchString }) => (
+  <RecipePage recipes={recipes} match={match} searchString={searchString} />
 );
 
 class App extends Component {
@@ -53,26 +51,18 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <Navbar
-          searchString={searchString}
-          onchange={pathName =>
-            this.setState({ searchString: pathName }, history.push(pathName))
-          }
+        <Route
+          exact
+          path='/recipe/:searchString?'
+          children={({ match }) => (
+            <Navbar
+              searchString={match ? match.params.searchString || "" : ""}
+              onchange={searchString => history.push(`/recipe/${searchString}`)}
+            />
+          )}
         />
 
         <div className='container mt-10'>
-          <Route
-            exact
-            path='/:searchString'
-            render={() => {
-              return (
-                <Link to={`/recipe/${slugify(searchString)}`}>
-                  <RecipePage recipes={recipes} match={match} />
-                </Link>
-              );
-            }}
-          />
-
           <Route exact path='/recipe/:recipeSlug' component={RecipePageRoute} />
           <Route path='/user/login' component={LoginRoute} />
           <Route path='/user/profile' component={ProfileRoute} />

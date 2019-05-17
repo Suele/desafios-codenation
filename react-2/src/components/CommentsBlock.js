@@ -49,6 +49,10 @@ class CommentsBlock extends Component {
     const { match } = this.props;
     const recipeSlug = match;
 
+    console.log("recipeSlug", recipeSlug);
+
+    console.log("ola", loginService.getUser());
+
     return commentsService.get(recipeSlug).map(commentUser => {
       return (
         <div className='Comment media text-muted pt-3' key={commentUser.date}>
@@ -61,7 +65,8 @@ class CommentsBlock extends Component {
             {commentUser[0]}
           </p>
           {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
-          {commentUser.author === loginService.getUser().username && (
+
+          {loginService.getUser().username && (
             <Link to={"/"}>
               <FontAwesomeIcon
                 icon='trash'
