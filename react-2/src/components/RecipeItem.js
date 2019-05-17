@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const RecipeItem = ({ title, thumbnail, ingredients }) => (
   <Link to={`/recipe/${title}`}>
     <div className='col-md-4'>
-      <div className='card border border-light' key={title}>
+      <div className='card border border-light' key={ingredients}>
         <img
           className='card-img-top img-fluid rounded rounded'
           src={thumbnail}

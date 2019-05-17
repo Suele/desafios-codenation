@@ -3,9 +3,7 @@ import loginService from "../services/loginService";
 import { Redirect, Link } from "react-router-dom";
 
 const User = () =>
-  !loginService.isLogged() ? (
-    <Redirect to={"/"} />
-  ) : (
+  loginService.isLogged() ? (
     <Link to={"/"}>
       <button
         className='btn'
@@ -16,6 +14,8 @@ const User = () =>
         Logout
       </button>
     </Link>
+  ) : (
+    <Redirect to={"/"} />
   );
 
 export default User;

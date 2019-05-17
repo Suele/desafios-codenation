@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, withRouter, matchPath } from "react-router-dom";
+import { Route, withRouter, Link, matchPath } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import RecipePage from "./RecipePage";
@@ -10,12 +10,13 @@ import recipes from "../sample_data/recipes.json";
 import PropTypes from "prop-types";
 
 const HomeRoute = ({ match, searchString }) => (
-  <Home match={match} recipes={recipes} searchString={searchString} />
+  <Home recipes={recipes} searchString={searchString} match={match} />
 );
+
 const LoginRoute = () => <Login />;
 const ProfileRoute = () => <User />;
 const RecipePageRoute = ({ match }) => (
-  <RecipePage recipes={recipes} match={match} />
+  <RecipePage recipes={recipes} match={match.params.recipeSlug} />
 );
 
 class App extends Component {
@@ -41,10 +42,11 @@ class App extends Component {
   render() {
     let { searchString } = this.state;
     const { history } = this.props;
+
     const { pathname } = this.props.location;
 
     const match = matchPath(pathname, {
-      path: "/recipe/:recipeSlug",
+      path: pathname,
       exact: true,
       strict: false
     });
@@ -61,21 +63,12 @@ class App extends Component {
         <div className='container mt-10'>
           <Route
             exact
-            path='/'
-            render={() => {
-              return <HomeRoute match={match} searchString={searchString} />;
-            }}
-          />
-
-          <Route
             path='/:searchString'
-            render={({
-              match: {
-                params: { searchString }
-              }
-            }) => {
+            render={() => {
               return (
-                <RecipePage searchString={searchString} recipes={recipes} />
+                <Link to={`/recipe/${slugify(searchString)}`}>
+                  <RecipePage recipes={recipes} match={match} />
+                </Link>
               );
             }}
           />
@@ -83,9 +76,11 @@ class App extends Component {
           <Route exact path='/recipe/:recipeSlug' component={RecipePageRoute} />
           <Route path='/user/login' component={LoginRoute} />
           <Route path='/user/profile' component={ProfileRoute} />
+          <Route exact path='/' component={HomeRoute} />
 
           {console.log(`recipe/${slugify(searchString)}`)}
           {console.log("match: ", match)}
+          {console.log("path >>>: ", match.path)}
           {console.log("searchString: ", searchString)}
           {console.log("pathname", pathname)}
         </div>

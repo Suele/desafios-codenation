@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import commentsService from "../services/commentsService";
 import loginService from "../services/loginService";
-import { Link, matchPath, withRouter } from "react-router-dom";
-import { slugify } from "../helpers";
+import { Link } from "react-router-dom";
 
 class CommentsBlock extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ class CommentsBlock extends Component {
   addComment = () => {
     const { comments } = this.state;
     const { match } = this.props;
-    const recipeSlug = slugify(match.params.recipeSlug);
+    const recipeSlug = match;
 
     const teste = commentsService.insert(recipeSlug, comments);
     console.log("teste", teste);
@@ -31,7 +30,7 @@ class CommentsBlock extends Component {
   deleteComment = index => {
     const { match } = this.props;
     const { comments } = this.state;
-    const recipeSlug = slugify(match.params.recipeSlug);
+    const recipeSlug = match;
 
     const newComments = comments.filter(comment => {
       return comment !== index;
@@ -48,10 +47,9 @@ class CommentsBlock extends Component {
 
   renderComment = () => {
     const { match } = this.props;
-    const { pathname } = this.props.location;
-    const recipeSlug = slugify(match.params.recipeSlug);
+    const recipeSlug = match;
 
-    return commentsService.get(recipeSlug).map((commentUser, index) => {
+    return commentsService.get(recipeSlug).map(commentUser => {
       return (
         <div className='Comment media text-muted pt-3' key={commentUser.date}>
           <FontAwesomeIcon className='mr-2' size='3x' icon='user-circle' />
@@ -64,7 +62,7 @@ class CommentsBlock extends Component {
           </p>
           {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
           {commentUser.author === loginService.getUser().username && (
-            <Link to={pathname}>
+            <Link to={"/"}>
               <FontAwesomeIcon
                 icon='trash'
                 onClick={() => commentsService.delete(recipeSlug, commentUser)}
@@ -78,13 +76,7 @@ class CommentsBlock extends Component {
 
   render() {
     const { disabledComment } = this.state;
-    const { pathname } = this.props.location;
-
-    const match = matchPath(pathname, {
-      path: "/recipe/:recipeSlug",
-      exact: true,
-      strict: false
-    });
+    const { match } = this.props;
     return (
       <div className='text-left'>
         <div className='my-3 p-3 bg-white rounded shadow-sm'>
@@ -107,7 +99,7 @@ class CommentsBlock extends Component {
               placeholder='Insert your comment here'
             />
           </div>
-          <Link to={pathname}>
+          <Link to={"/"}>
             <button
               onClick={this.addComment}
               disabled={disabledComment}
@@ -118,12 +110,10 @@ class CommentsBlock extends Component {
             </button>
           </Link>
         </form>
-        {console.log(this.state)}
-        {console.log(match)}
-        {console.log(match.params)}
+        {console.log("match", match)}
       </div>
     );
   }
 }
 
-export default withRouter(CommentsBlock);
+export default CommentsBlock;

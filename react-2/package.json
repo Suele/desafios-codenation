@@ -26,5 +26,11 @@
     "submit": "codenation-jest-score ./score-map.json",
     "exec": "cross-env CI=true react-scripts test --env=jsdom --json"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

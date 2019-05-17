@@ -1,57 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CommentsBlock from "./CommentsBlock";
-import RecipeItem from "./RecipeItem";
 
-const RecipePage = ({ searchString = "", recipes = [], match }) => {
-  return searchString
-    ? recipes.results
-        .filter(recipe => {
-          return (
-            recipe.title.toLowerCase().indexOf(searchString.toLowerCase()) !==
-              -1 ||
-            recipe.ingredients
-              .toLowerCase()
-              .indexOf(searchString.toLowerCase()) !== -1
-          );
-        })
-        .map(recipe => {
-          return (
-            <div className='container mt-10'>
-              <div className='row'>
-                <RecipeItem
-                  key={recipe.title}
-                  thumbnail={recipe.thumbnail}
-                  title={recipe.title}
-                  ingredients={recipe.ingredients}
-                />
-              </div>
-            </div>
-          );
-        })
-    : recipes.results
-        .filter(recipe => {
-          return recipe.title === match.params.recipeSlug;
-        })
-        .map(recipe => {
-          return (
-            <div className='container mt-2'>
-              <div className='row'>
-                <RecipeItem
-                  key={recipe.title}
-                  thumbnail={recipe.thumbnail}
-                  title={recipe.title}
-                  ingredients={recipe.ingredients}
-                />
-              </div>
-              <CommentsBlock />
-            </div>
-          );
-        });
-};
+const RecipePage = ({ recipes, match }) =>
+  recipes.results
+    .filter(recipe => {
+      return recipe.title === match;
+    })
+    .map(recipe => {
+      return (
+        <div>
+          <img
+            className='img-fluid'
+            src={recipe.thumbnail}
+            alt={recipe.title}
+          />
+          <div className='card-body'>
+            <h5 className='card-title'>{recipe.title}</h5>
+            <p className='card-text'>
+              <strong>Ingredients: </strong>
+              {recipe.ingredients}
+            </p>
+          </div>
+          <CommentsBlock match={match} />
+        </div>
+      );
+    });
 
 RecipePage.propTypes = {
-  searchString: PropTypes.string,
   recipes: PropTypes.object
 };
 
