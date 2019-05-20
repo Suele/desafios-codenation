@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import CharacterListItem from '../CharacterListItem/CharacterListItem';
 
 const CharacterList = props => (
-  <h1> cards </h1>
+  <div>
+    <h1> cards </h1>
+    <CharacterListItem />
+  </div>
 );
 
 function mapStateToProps(state) {
