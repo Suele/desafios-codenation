@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://gateway.marvel.com/';
+const BASE_URL = 'https://gateway.marvel.com:443/v1/public/';
 
 class Api {
   static get(uri) {
