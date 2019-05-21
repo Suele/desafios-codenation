@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import SearchForm from "../SearchForm/SearchForm";
+import React, { Component } from 'react';
+import SearchForm from '../SearchForm/SearchForm';
 
-const Field = ({ component, ...props}) => <input {...props} />
+const Field = ({ component, ...props }) => <input {...props} />;
 
 class SearchBar extends Component {
   state = {};
@@ -14,7 +14,7 @@ class SearchBar extends Component {
           placeholder="Buscar Personagens"
           component={SearchForm}
           type="text"
-          onChange={() => console.log()}
+          onChange={e => e.target.value}
           data-testid="SearchBar"
         />
       </div>
