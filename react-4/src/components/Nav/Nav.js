@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import marvelLogo from '../../img/marvel-logo.jpg';
 
 const Navbar = styled.nav`
-  padding: 2em;
-  margin: 0em;
-  background: black;
+  margin: 2em auto;
+  background-color: black;
+  position: absolute;
 `;
 
 const Img = styled.img`
