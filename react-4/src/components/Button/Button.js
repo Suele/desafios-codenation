@@ -3,18 +3,17 @@ import styled from 'styled-components';
 
 const ButtonDetail = styled.button`
   color: palevioletred;
+  margin: 0 auto;
   font-size: 1em;
-
-  padding: 0.25em 1em;
+  padding: 0.5em;
   border: 2px solid palevioletred;
-  border-radius: 5px;
+  border-radius: 0.3em;
   font-size: 1.5em;
   &:hover {
     background-color: black;
   }
-  width: 168px;
+  width: 100px;
   height: 40px;
-  padding-top: 10px;
 `;
 
 const Button = props => <ButtonDetail>{props.text}</ButtonDetail>;

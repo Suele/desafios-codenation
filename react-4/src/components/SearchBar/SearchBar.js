@@ -11,18 +11,18 @@ const Field = ({ component, ...props }) => (
 );
 
 const InputAndButton = styled.div`
+  padding-bottom: 1em;
+  margin: 1.5em 0 auto;
   position: relative;
-  padding-left: 400px;
-  margin: 2em auto;
-  display: inline;
-  margin: 0 auto;
+  padding-left: 500px;
 `;
 
 const Input = styled.input`
+  font-size: 1em;
   margin: 0 auto;
-  width: 278px;
-  height: 40px;
-  border-radius: 5px;
+  width: 300px;
+  height: 30px;
+  border-radius: 0.3em;
 `;
 
 class SearchBar extends Component {

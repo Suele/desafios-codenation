@@ -1,43 +1,52 @@
 import React from 'react';
 import Button from '../Button/Button';
-import thanos from '../../img/thanos.jpg';
 import styled from 'styled-components';
 
 const Img = styled.img`
   border-radius: 8px;
   margin: 0 auto;
-  width: 500px;
   max-width: 500px;
 `;
 
 const TitleCard = styled.h1`
-  margin: 0 auto;
-  padding-top: 10px;
+  font-size: 1.25rem;
   font-weight: bold;
-  display: block;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 `;
 
-const CardWrapper = styled.div`
+const Card = styled.div`
   background-color: white;
-  width: 600px;
-  border-radius: 5px;
   text-align: center;
-  display: grid;
-  grid-gap: 20px;
-  align-items: stretch;
-  border: 1px solid #ccc;
+  padding-top: 50px;
+  padding-bottom: 20px;
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  margin: 3.5em 0 auto;
+
+  flex-direction: column;
+  overflow: hidden;
+  &:hover {
+    .card__image {
+      filter: contrast(100%);
+    }
+  }
 `;
 
-const charactersListItem = props => (
-  <CardWrapper>
-    <TitleCard> character name </TitleCard>
-    <Img src={thanos} alt="image thanos" />
-    <Button />
+const Description = styled.p`
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+`;
 
-    <TitleCard> character name </TitleCard>
-    <Img src={thanos} alt="image thanos" />
-    <Button />
-  </CardWrapper>
+const charactersListItem = ({ name, thumbnail, description }) => (
+  <Card>
+    <TitleCard key={name}> {name} </TitleCard>
+    <Img src={thumbnail} alt={name} />
+    <Description>{description}</Description>
+    <Button>detalhes</Button>
+  </Card>
 );
 
 export default charactersListItem;

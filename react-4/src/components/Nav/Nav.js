@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 import marvelLogo from '../../img/marvel-logo.jpg';
 
 const Navbar = styled.nav`
-  margin: 2em auto;
+  margin: 0 auto;
+  width: 100%;
   background-color: black;
   position: absolute;
 `;
 
 const Img = styled.img`
-  border-radius: 8px;
+  padding: 1em;
+  margin: 0 auto;
+  border-radius: 0.7em;
   width: 200px;
 `;
 
