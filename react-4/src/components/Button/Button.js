@@ -12,10 +12,12 @@ const ButtonDetail = styled.button`
   &:hover {
     background-color: black;
   }
-  width: 450px;
+  width: 168px;
+  height: 16px;
   display: block;
+  padding-top: 10px;
 `;
 
-const Button = () => <ButtonDetail>Detalhes</ButtonDetail>;
+const Button = props => <ButtonDetail>{props.text}</ButtonDetail>;
 
 export default Button;
