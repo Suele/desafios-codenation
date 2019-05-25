@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import marvelLogo from '../../img/marvel-logo.jpg';
 
 const Navbar = styled.nav`
@@ -15,7 +16,9 @@ const Img = styled.img`
 
 const Nav = () => (
   <Navbar>
-    <Img src={marvelLogo} alt="marvel-logo" />
+    <Link to="/">
+      <Img src={marvelLogo} alt="marvel-logo" />
+    </Link>
   </Navbar>
 );
 
