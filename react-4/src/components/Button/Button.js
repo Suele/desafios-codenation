@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const ButtonDetail = styled.button`
   color: palevioletred;
   font-size: 1em;
-  margin: 0 auto;
+
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 5px;
@@ -13,8 +13,7 @@ const ButtonDetail = styled.button`
     background-color: black;
   }
   width: 168px;
-  height: 16px;
-  display: block;
+  height: 40px;
   padding-top: 10px;
 `;
 
