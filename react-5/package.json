@@ -36,7 +36,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "node-sass": "4.7.2",
+    "node-sass": "4.14.1",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
     "react-test-renderer": "^16.5.2"
